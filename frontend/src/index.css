@@ -1,0 +1,67 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#techly {
+  font-weight: bold;
+  font-size: xx-large;
+}
+
+.navbar {
+    position: fixed;
+    width: 100%;
+}
+
+.nav-item, .navbar-nav {
+  margin-left: 4rem;
+}
+
+.nav-item:hover {
+  background-color: rgb(173, 170, 170);
+  color: black;
+  font-weight: bold;
+}
+
+.nav-item:visited {
+    color: aquamarine;
+}
+
+#image {
+  background-color: rgb(127, 236, 255);
+  height: 270px;
+}
+
+#techImg {
+  width: 100%;
+  height: 270px;
+}
+
+.about {
+  width: 100%;
+  flex-grow: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  background-color: #fff;
+}
+
+Footer {
+  text-align: center;
+  font-weight: bold;
+  background-color: rgb(173, 170, 170);
+  height: 4rem;
+}
+
+Footer p {
+  padding-top: 1rem;
+}
+
+
+@media screen and (max-width:990px) {
+  .nav-item, .navbar-nav {
+  margin-left: 0;
+}
+
+
+}
