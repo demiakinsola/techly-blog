@@ -5,7 +5,7 @@ const getPosts = async (req, res) => {
     const posts = await Post.find();
     //if there is no post
     if (!posts) {
-        return res.status(400).json({ "message": "No Post found"});
+        return res.status(404).json({ "message": "No Post found"});
     }
     return res.status(200).json(posts);
 }

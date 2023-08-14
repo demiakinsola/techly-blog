@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 
-const Nav = () => {
+const Nav = ({ search, setSearch }) => {
   return (
     <nav className="navbar navbar-expand-lg bg-light">
       <div className="container-fluid">
@@ -27,7 +27,7 @@ const Nav = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="#">
+              <Link className="nav-link" to="post">
                 New Post
               </Link>
             </li>
@@ -53,11 +53,16 @@ const Nav = () => {
               </Link>
               <ul className="dropdown-menu">
                 <li>
-                  <Link className="dropdown-item" to="#">
+                  <Link className="dropdown-item" to="login">
                     Login
                   </Link>
                 </li>
-                <li>
+                <li
+                  onClick={() => {
+                    localStorage.clear();
+                    window.location.href = "/login";
+                  }}
+                >
                   <Link className="dropdown-item" to="#">
                     Logout
                   </Link>
@@ -66,28 +71,27 @@ const Nav = () => {
                   <hr className="dropdown-divider" />
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="#">
+                  <Link className="dropdown-item" to="sign-up">
                     Create an account
                   </Link>
                 </li>
               </ul>
             </li>
           </ul>
-          <form className="d-flex" role="search">
+          <form role="search" onSubmit={(e) => e.preventDefault()}>
             <input
               className="form-control me-2"
               type="search"
               placeholder="Search"
               aria-label="Search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
-            <button className="btn btn-outline-success" type="submit">
-              Search
-            </button>
           </form>
         </div>
       </div>
     </nav>
   );
-}
+};
 
-export default Nav
+export default Nav;

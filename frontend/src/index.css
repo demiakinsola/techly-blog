@@ -7,6 +7,7 @@
 #techly {
   font-weight: bold;
   font-size: xx-large;
+  margin-left: 1rem;
 }
 
 .navbar {
@@ -57,11 +58,39 @@ Footer p {
   padding-top: 1rem;
 }
 
+.postTitle, .timestamp {
+  text-decoration: none;
+  color: black;
+  margin-left: 1.5rem;
+}
+
+
+.postTitle {
+  margin-top: 1rem;
+}
+
+#title:hover, #stamp:hover {
+  background-color: rgb(208, 208, 244)
+}
+
+.postBody {
+  margin-left: 1.5rem;
+}
+
+button:hover {
+  background-color: rgb(173, 170, 170);
+}
+
+.footer {
+  position: fixed;
+  width: 100%;
+}
 
 @media screen and (max-width:990px) {
   .nav-item, .navbar-nav {
   margin-left: 0;
 }
+
 
 
 }

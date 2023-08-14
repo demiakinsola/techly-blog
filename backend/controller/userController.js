@@ -1,5 +1,7 @@
 const User = require("../model/User");
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const newUser = async (req, res) => {
   const { fullName, email, password } = req.body;
@@ -18,7 +20,7 @@ const newUser = async (req, res) => {
       email: email,
       password: hashedPassword,
     });
-    return res.status(409).json(savedUser);
+    return res.status(200).json(savedUser);
   } catch (err) {
     console.log(err);
   }
@@ -37,9 +39,41 @@ const userLogin = async (req, res) => {
   //check if the passwords match
   const matchPassword = await bcrypt.compare(password, foundUser.password);
   if (matchPassword) {
-    return res.status(200).json(foundUser);
+    //generate the accessToken
+    const roles = Object.values(foundUser.roles).filter(Boolean);
+    const accessToken = jwt.sign(
+      {
+        userDetails: {
+          email: foundUser.email,
+          roles: roles
+        } 
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: '1d'}
+    );
+    //generate the refreshToken
+    const refreshToken = jwt.sign(
+      { email: foundUser.email },
+      process.env.REFRESH_TOKEN_SECRET,
+      { expiresIn: '2d'}
+    );
+
+    //save the refreshToken in the database
+    foundUser.refreshToken = refreshToken;
+    const savedUser = await foundUser.save();
+      
+    //save the refreshToken in a httpOnly cookie
+      res.cookie('jwt', refreshToken, {
+        httpOnly: true,
+        sameSite: 'None',
+        secure: true,
+        maxAge: 48 * 60 * 60 * 1000
+      })
+      //return the accessToken
+      return res.json({ roles, accessToken })
   }
 };
+
 
 //delete user account
 const deleteUser = async (req, res) => {
